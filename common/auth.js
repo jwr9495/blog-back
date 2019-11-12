@@ -1,17 +1,18 @@
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const { User } = require("../models/user");
-const conifg = require("./jwt_config");
+const config = require("./jwt_config");
 
 const { ExtractJwt, Strategy } = passportJWT;
 const options = {
-  secretOrKey: conifg.jwtSecret,
+  secretOrKey: config.jwtSecret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt")
 };
 
 module.exports = () => {
   const strategy = new Strategy(options, async (payload, done) => {
     const user = await User.findById(payload.id);
+    // success -> req.user = { id: user._id, email: user.email, name: user.name }로 담김
     if (user) {
       return done(null, { id: user._id, email: user.email, name: user.name });
     } else {
@@ -24,7 +25,7 @@ module.exports = () => {
       return passport.initialize();
     },
     authenticate() {
-      return passport.authenticate("jwr", config.jwtSession);
+      return passport.authenticate("jwt", config.jwtSession);
     }
   };
 };
