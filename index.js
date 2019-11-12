@@ -10,7 +10,7 @@ const config = require("./common/jwt_config");
 const auth = require("./common/auth")();
 
 const dbURI = process.env.MONGODB_URI || "mongodb://localhost/blog-dev";
-app.user(Helmet);
+app.use(Helmet());
 app.use((req, res, next) => {
   mongoose
     .connect("mongodb://localhost/blog-dev", {
