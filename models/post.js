@@ -19,8 +19,8 @@ function validatePost(post) {
     author: Joi.string(),
     contents: Joi.string(),
     date: Joi.date(),
-    commnents: Joi.array().items.Joi.string(),
-    tags: Joi.array().items.Joi.string()
+    commnents: Joi.array().items(Joi.string()),
+    tags: Joi.array().items(Joi.string())
   });
   return Schema.validate(post);
 }
