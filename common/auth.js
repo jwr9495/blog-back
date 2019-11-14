@@ -12,7 +12,6 @@ const options = {
 module.exports = () => {
   const strategy = new Strategy(options, async (payload, done) => {
     const user = await User.findById(payload.id);
-    // success -> req.user = { id: user._id, email: user.email, name: user.name }로 담김
     if (user) {
       return done(null, {
         id: user._id,
@@ -24,6 +23,7 @@ module.exports = () => {
       return done(new Error("user not found"), null);
     }
   });
+
   passport.use(strategy);
   return {
     initialize() {

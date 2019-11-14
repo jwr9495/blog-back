@@ -13,11 +13,11 @@ const dbURI = process.env.MONGODB_URI || "mongodb://localhost/blog-dev";
 app.use(Helmet());
 app.use((req, res, next) => {
   mongoose
-    .connect("mongodb://localhost/blog-dev", {
+    .connect(dbURI, {
       useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: true
+      useFindAndModify: false
     })
     .then(() => next())
     .catch(e => next(e));
@@ -27,7 +27,7 @@ app.use(express.json());
 app.use("/auth", user);
 app.use("/api/post", post);
 app.use("/api/tag", tag);
-app.use("api/comment", comment);
+app.use("/api/comment", comment);
 app.use(() => mongoose.disconnect());
 
 const PORT = process.env.PORT || 3000;

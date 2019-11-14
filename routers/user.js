@@ -11,6 +11,7 @@ router.post(
   wrapper(async (req, res, next) => {
     const { name, email, password } = req.body;
     if (validateUser(req.body).error) {
+      //검증과정 통과 못하면
       res.status(400).json({ result: false });
       next();
       return;
@@ -28,7 +29,6 @@ router.post(
   "/login",
   wrapper(async (req, res, next) => {
     const { email, password } = req.body;
-    console.log(email);
     const user = await User.findOne({ email: email });
     if (!user) {
       res.json({ result: false });
@@ -37,7 +37,7 @@ router.post(
     }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
-      //create token
+      //토큰을 만들어 줍시다!
       const token = jwt.sign(
         {
           id: user._id,

@@ -15,8 +15,9 @@ router.post(
       return;
     }
     const { title, contents, tags } = req.body;
+    // tags: asd9125kasdgj341254 fasdklj2365kljAAA AKLSDJGAKL1351askldjg
     if (validatePost(req.body).error) {
-      res.status(400).json({ result: false, error: "양식에 맞지 않음." });
+      res.status(400).json({ result: false, error: "양식에 맞지 않음" });
       next();
       return;
     }
@@ -28,15 +29,9 @@ router.post(
     });
     await post.save();
     //여기까지가 포스트만 작성
-    //이제부터 tag에다가 업데이트
-
+    //이제부터는 tag에다가 업데이트!
     for (const tag_id of tags) {
       const tag = await Tag.findById(tag_id);
-      /*{
-      _id,
-      name,
-      post
-    }*/
       tag.posts.push(post._id);
       await tag.save();
     }
@@ -58,14 +53,14 @@ router.get(
         .skip(skip)
         .limit(5)
         .sort("-date")
-        .populate("tags", "name");
+        .populate("tags");
       res.json({ posts });
     } else {
       const posts = await Post.find()
         .limit(5)
         .skip(skip)
         .sort("-date")
-        .populate("tags", "name");
+        .populate("tags");
       res.json({ posts });
     }
     next();
@@ -76,7 +71,7 @@ router.get(
   "/:id",
   wrapper(async (req, res, next) => {
     const post = await Post.findById(req.params.id).populate("tags");
-    res.json({ post });
+    res.json(post);
     next();
   })
 );

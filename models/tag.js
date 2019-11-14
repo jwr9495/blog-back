@@ -10,11 +10,11 @@ const tagSchema = new Schema({
 const Tag = model("Tag", tagSchema);
 
 function validateTag(tag) {
-  const Schema = Joi.object({
+  const schema = Joi.object({
     name: Joi.string(),
-    posts: Joi.string()
+    posts: Joi.array().items(Joi.string())
   });
-  return Schema.validate(tag);
+  return schema.validate(tag);
 }
 module.exports = {
   Tag,

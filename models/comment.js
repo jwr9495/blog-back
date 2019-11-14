@@ -9,16 +9,16 @@ const commentSchema = new Schema({
   contents: String
 });
 
-const Comment = model("Post", commentSchema);
+const Comment = model("Comment", commentSchema);
 
 function validateComment(comment) {
-  const Schema = Joi.object({
+  const schema = Joi.object({
     post_id: Joi.string(),
     author: Joi.string(),
     contents: Joi.string(),
     date: Joi.date()
   });
-  return Schema.validate(comment);
+  return schema.validate(comment);
 }
 module.exports = {
   Comment,

@@ -1,5 +1,5 @@
 module.exports = {
-  jwtSecret: process.env.TOKEN_KEY || "woori",
+  jwtSecret: process.env.TOKEN_KEY || "mulcamfaker",
   jwtSession: {
     session: false
   }

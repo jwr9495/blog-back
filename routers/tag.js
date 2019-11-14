@@ -17,7 +17,7 @@ router.post(
   wrapper(async (req, res, next) => {
     const name = req.body.name;
     if (validateTag(req.body).error) {
-      res.json({ error: "Not fit on the form" });
+      res.json({ error: "양식에 맞지 않음" });
       next();
       return;
     }
@@ -38,7 +38,7 @@ router.get(
     if (tag) {
       res.json({ tag });
     } else {
-      res.json({ error: "tag is undefind" });
+      res.json({ error: "태그가 없습니다" });
     }
     next();
   })
